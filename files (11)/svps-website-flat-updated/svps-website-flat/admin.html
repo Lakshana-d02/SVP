@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | SVP Systems</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="googlebot" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><img src="assets/logo.png" alt="SVP Systems logo"></span>
+      <span class="brand-name">SVP SYSTEMS<small>SRI VINAYAGA POWER SYSTEM · GUDUVANCHERY</small></span>
+    </a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="cart.html">Enquiry</a>
+      <a href="admin.html" class="active">Admin</a>
+      <a href="cart.html" class="cart-pill">Cart <span id="cart-count">0</span></a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMobileNav()">&#9776;</button>
+  </div>
+</header>
+
+<div id="login-view">
+  <div class="login-box">
+    <h2 style="font-size:24px;">Admin Login</h2>
+    <p style="color:#7A8698;font-size:13.5px;margin:8px 0 18px;">Demo login for editing product names, brands and descriptions shown on the site.</p>
+    <div class="form-field"><label>Username</label><input type="text" id="admin-user" placeholder="admin"></div>
+    <div class="form-field"><label>Password</label><input type="password" id="admin-pass" placeholder="••••••••"></div>
+    <button class="btn btn-amber" style="width:100%;justify-content:center;margin-top:16px;" onclick="tryLogin()">Log in</button>
+    <p style="font-size:12px;color:#B0392B;margin-top:10px;" id="login-error"></p>
+    <p style="font-size:12px;color:#8A94A6;margin-top:14px;">Default demo credentials: <b>admin</b> / <b>svps2026</b>. Change these in assets/app.js before going live.</p>
+  </div>
+</div>
+
+<div id="admin-view" style="display:none;">
+  <div class="admin-shell">
+    <div class="admin-side">
+      <div class="item active" onclick="showPane('products',this)">Products</div>
+      <div class="item" onclick="showPane('customers',this)">Customer Enquiries</div>
+      <div class="item" onclick="showPane('settings',this)">Site Settings</div>
+      <div class="item" onclick="showPane('export',this)">Export / Backup</div>
+      <div class="item" onclick="logout()" style="margin-top:30px;color:#FFB020;">Log out</div>
+    </div>
+    <div class="admin-main">
+
+      <div id="pane-products">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <h2 style="font-size:26px;">Products</h2>
+          <button class="btn btn-amber" onclick="addBlankProduct()">+ Add product</button>
+        </div>
+        <table class="table-mini" id="prod-table">
+          <thead><tr><th>Name</th><th>Category</th><th>Status</th><th></th></tr></thead>
+          <tbody id="prod-tbody"></tbody>
+        </table>
+        <div id="edit-panel"></div>
+      </div>
+
+      <div id="pane-customers" style="display:none;">
+        <h2 style="font-size:26px;margin-bottom:16px;">Customer Enquiries</h2>
+        <div class="admin-card">
+          <p style="color:#4B5A72;font-size:14px;margin-bottom:12px;">
+            Every enquiry a customer sends is saved automatically into your own
+            private <b>Google Sheet</b> - no server, no login here, no technical setup
+            to maintain. Only you can see it, using your own Google account.
+          </p>
+          <p style="color:#4B5A72;font-size:14px;margin-bottom:14px;">
+            Haven't set this up yet? Open the <code>google-sheet-setup</code> folder
+            in your website files and follow <code>SETUP-INSTRUCTIONS.txt</code> -
+            it takes about 5 minutes and needs no coding.
+          </p>
+          <div class="admin-row">
+            <label>My Sheet link</label>
+            <input id="cust-sheet-link" placeholder="Paste your Google Sheet link here">
+          </div>
+          <button class="btn-add" style="max-width:200px;" onclick="saveSheetLink()">Save link</button>
+          <a class="btn-add" id="cust-open-link" style="max-width:220px;margin-top:10px;background:#008CBA;display:inline-block;text-align:center;text-decoration:none;" href="https://sheets.google.com" target="_blank">Open my customer list</a>
+          <p style="font-size:12px;color:#8A94A6;margin-top:12px;">This link is only saved on this device/browser, just so this button remembers it for you - it is never shown to website visitors.</p>
+        </div>
+      </div>
+
+      <div id="pane-settings" style="display:none;">
+        <h2 style="font-size:26px;margin-bottom:16px;">Site Settings</h2>
+        <div class="admin-card">
+          <div class="admin-row"><label>WhatsApp No.</label><input id="set-wa" placeholder="91XXXXXXXXXX"></div>
+          <div class="admin-row"><label>Shop address</label><input id="set-addr" placeholder="Nandhivaram, Guduvanchery"></div>
+          <button class="btn-add" style="max-width:180px;" onclick="saveSettings()">Save settings</button>
+          <p style="font-size:12px;color:#8A94A6;margin-top:10px;">These are stored on this device only. To change them site-wide for every visitor, update WHATSAPP_NUMBER in <code>assets/app.js</code> directly and re-upload the file.</p>
+        </div>
+      </div>
+
+      <div id="pane-export" style="display:none;">
+        <h2 style="font-size:26px;margin-bottom:16px;">Export / Backup</h2>
+        <div class="admin-card">
+          <p style="color:#4B5A72;font-size:14px;">Your edits are saved in this browser only (localStorage). To make them permanent for all visitors, download the updated product file and replace <code>assets/app.js</code>'s DEFAULT_PRODUCTS on your server.</p>
+          <button class="btn-add" style="max-width:220px;margin-top:10px;" onclick="exportProducts()">Download products.json</button>
+          <button class="btn-add" style="max-width:220px;margin-top:10px;background:#C0392B;" onclick="resetAll()">Reset to defaults</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="assets/app.js"></script>
+<script>
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "svps2026";
+
+function tryLogin(){
+  const u = document.getElementById("admin-user").value.trim();
+  const p = document.getElementById("admin-pass").value.trim();
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    sessionStorage.setItem("svps_admin","1");
+    showAdmin();
+  } else {
+    document.getElementById("login-error").textContent = "Incorrect username or password.";
+  }
+}
+function logout(){
+  sessionStorage.removeItem("svps_admin");
+  location.reload();
+}
+function showAdmin(){
+  document.getElementById("login-view").style.display = "none";
+  document.getElementById("admin-view").style.display = "block";
+  renderTable();
+}
+function showPane(name, el){
+  document.querySelectorAll(".admin-side .item").forEach(i=>i.classList.remove("active"));
+  el.classList.add("active");
+  ["products","customers","settings","export"].forEach(p=>{
+    document.getElementById("pane-"+p).style.display = (p===name) ? "block" : "none";
+  });
+}
+
+function renderTable(){
+  const products = getProducts();
+  document.getElementById("prod-tbody").innerHTML = products.map((p,i)=>`
+    <tr>
+      <td>${p.name}</td>
+      <td>${p.cat}</td>
+      <td><span class="badge-live">Live</span></td>
+      <td>
+        <button class="btn-add" style="padding:5px 10px;" onclick="editProduct(${i})">Edit</button>
+        <button class="btn-add" style="padding:5px 10px;background:#C0392B;" onclick="deleteProduct(${i})">Delete</button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function editProduct(i){
+  const products = getProducts();
+  const p = products[i];
+  document.getElementById("edit-panel").innerHTML = `
+    <div class="admin-card">
+      <h3 style="font-size:18px;margin-bottom:12px;">Edit: ${p.name}</h3>
+      <div class="admin-row"><label>Name</label><input id="f-name" value="${p.name}"></div>
+      <div class="admin-row"><label>Category</label>
+        <select id="f-cat">
+          <option value="Battery" ${p.cat==='Battery'?'selected':''}>Battery / Inverter</option>
+          <option value="RO Purifier" ${p.cat==='RO Purifier'?'selected':''}>RO Purifier</option>
+        </select>
+      </div>
+      <div class="admin-row"><label>Description</label><textarea id="f-desc" rows="2">${p.desc}</textarea></div>
+      <button class="btn-add" style="max-width:160px;" onclick="saveProduct(${i})">Save changes</button>
+    </div>
+  `;
+}
+function saveProduct(i){
+  const products = getProducts();
+  products[i] = {
+    ...products[i],
+    name: document.getElementById("f-name").value.trim(),
+    cat: document.getElementById("f-cat").value,
+    desc: document.getElementById("f-desc").value.trim(),
+  };
+  saveProducts(products);
+  document.getElementById("edit-panel").innerHTML = "";
+  renderTable();
+}
+function deleteProduct(i){
+  const products = getProducts();
+  products.splice(i,1);
+  saveProducts(products);
+  renderTable();
+}
+function addBlankProduct(){
+  const products = getProducts();
+  const id = "custom-"+Date.now();
+  products.push({id, cat:"Battery", name:"New Brand", desc:"Description", img:"assets/brands/batt-genus.png"});
+  saveProducts(products);
+  renderTable();
+  editProduct(products.length-1);
+}
+function exportProducts(){
+  const blob = new Blob([JSON.stringify(getProducts(),null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "products.json";
+  a.click();
+}
+function resetAll(){
+  if(confirm("Reset all products to the original defaults? This clears your local edits.")){
+    resetProducts();
+    renderTable();
+  }
+}
+function saveSettings(){
+  alert("Saved locally. Remember: to change the WhatsApp number for every visitor, edit WHATSAPP_NUMBER in assets/app.js.");
+}
+
+function saveSheetLink(){
+  const link = document.getElementById("cust-sheet-link").value.trim();
+  if(link){
+    localStorage.setItem("svps_sheet_link", link);
+    document.getElementById("cust-open-link").href = link;
+    alert("Saved! The button below will now open your sheet directly.");
+  }
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+  const saved = localStorage.getItem("svps_sheet_link");
+  if(saved){
+    document.getElementById("cust-sheet-link").value = saved;
+    document.getElementById("cust-open-link").href = saved;
+  }
+});
+
+if(sessionStorage.getItem("svps_admin")==="1"){ showAdmin(); }
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+HOW TO GET CUSTOMER ENQUIRIES INTO A GOOGLE SHEET
+==================================================
+No coding, no server, no terminal. Takes about 5 minutes, once.
+You only ever need YOUR Google account (Gmail) - nothing to install.
+
+STEP 1 - Create the sheet
+--------------------------
+1. Go to https://sheets.google.com
+2. Click the "+" (Blank spreadsheet).
+3. Rename it to something like "SVP Systems - Customer Enquiries"
+   (click the title at the top left to rename).
+
+STEP 2 - Add the script
+------------------------
+1. In the Google Sheet, click "Extensions" in the top menu.
+2. Click "Apps Script". A new tab opens with a code editor.
+3. Delete anything already in the box (usually says "function myFunction() {}").
+4. Open the file "apps-script-code.gs" (included alongside this file),
+   copy ALL of its contents, and paste it into that box.
+5. Click the disk/save icon (or press Ctrl+S).
+
+STEP 3 - Publish it as a web link
+-----------------------------------
+1. Still in the Apps Script tab, click the blue "Deploy" button (top right)
+   -> "New deployment".
+2. Click the gear/settings icon next to "Select type" and choose "Web app".
+3. Fill in:
+     Description:        Customer enquiries
+     Execute as:          Me (your email)
+     Who has access:      Anyone
+   (Don't worry - "Anyone" just means the website can send data IN.
+    Nobody can read your sheet without logging into your Google account.)
+4. Click "Deploy".
+5. Google may ask you to "Authorize access" - click through with your
+   own Google account and click "Allow" (you'll see a warning screen
+   saying "Google hasn't verified this app" - this is normal for your
+   own private script; click "Advanced" -> "Go to (your project name),
+   unsafe" -> "Allow").
+6. You'll now see a "Web app URL" - it looks like:
+     https://script.google.com/macros/s/AKfycb.../exec
+   COPY this link.
+
+STEP 4 - Connect it to the website
+-------------------------------------
+1. Open the website file "assets/app.js" in any text editor (Notepad
+   works fine).
+2. Find this line near the top:
+     const BACKEND_URL = "";
+3. Paste your link between the quotes, so it looks like:
+     const BACKEND_URL = "https://script.google.com/macros/s/AKfycb.../exec";
+4. Save the file and re-upload it to your website (replacing the old one).
+
+That's it! From now on, every enquiry submitted on the website's
+Enquiry page appears as a new row in your Google Sheet automatically.
+
+HOW TO VIEW YOUR CUSTOMER LIST
+================================
+Just open https://sheets.google.com any time, on your phone or
+computer, and open your "SVP Systems - Customer Enquiries" sheet.
+To download it as an Excel file: File -> Download -> Microsoft Excel (.xlsx)
+
+WHO CAN SEE THIS DATA?
+========================
+Only you - anyone signed into your Google account that owns the
+sheet. It is private by default. Customers browsing the website
+never see it, and it never appears anywhere on the site itself.

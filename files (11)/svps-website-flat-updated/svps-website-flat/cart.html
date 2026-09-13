@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart &amp; Enquiry | SVP Systems</title>
+<meta name="description" content="Build your enquiry and chat with Sri Vinayaga Power System on WhatsApp for inverters, batteries and RO purifiers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><img src="assets/logo.png" alt="SVP Systems logo"></span>
+      <span class="brand-name">SVP SYSTEMS<small>SRI VINAYAGA POWER SYSTEM · GUDUVANCHERY</small></span>
+    </a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="cart.html" class="active">Enquiry</a>
+      <a href="cart.html" class="cart-pill">Cart <span id="cart-count">0</span></a>
+    </nav>
+    <button class="menu-btn" onclick="toggleMobileNav()">&#9776;</button>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> / Cart &amp; Enquiry</div>
+    <h1>Build your enquiry</h1>
+    <p>Add what you need, then send it straight to our WhatsApp - no forms, no waiting on hold.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap cart-layout">
+    <div>
+      <div class="tab-row">
+        <button class="tab-btn active" data-cat="all" onclick="filterCat('all',this)">All</button>
+        <button class="tab-btn" data-cat="Battery" onclick="filterCat('Battery',this)">Inverters &amp; Batteries</button>
+        <button class="tab-btn" data-cat="RO Purifier" onclick="filterCat('RO Purifier',this)">RO Purifiers</button>
+      </div>
+      <div class="prod-grid" id="prod-grid"></div>
+    </div>
+
+    <div class="cart-summary reveal">
+      <h3>Your enquiry</h3>
+      <div id="cart-lines"><p class="empty-note">No items added yet. Add products from the left, or just send a general enquiry below.</p></div>
+      <div class="cart-total" id="cart-total" style="display:none;"><span>Estimated total</span><span id="cart-total-val">₹0</span></div>
+
+      <div class="form-field">
+        <label>Your name</label>
+        <input type="text" id="cust-name" placeholder="e.g. Karthik">
+      </div>
+      <div class="form-field">
+        <label>Phone number</label>
+        <input type="tel" id="cust-phone" placeholder="e.g. 9876543210">
+      </div>
+      <div class="form-field">
+        <label>Area / locality</label>
+        <input type="text" id="cust-area" placeholder="e.g. Guduvanchery">
+      </div>
+      <div class="form-field">
+        <label>Note (optional) - describe your requirement</label>
+        <textarea id="cust-note" rows="3" placeholder="e.g. Need inverter for 3 fans, 4 lights, 1 TV. Or: house water is hard, need RO+UV."></textarea>
+      </div>
+
+      <a class="btn btn-whatsapp" style="width:100%;justify-content:center;margin-top:14px;" href="#" onclick="sendToWhatsApp();return false;">Chat on WhatsApp with this enquiry</a>
+      <p style="font-size:12px;color:#8A94A6;margin-top:10px;">This opens WhatsApp with your list and notes pre-filled - you can edit before sending.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap foot-grid">
+    <div><h4>SVP Systems</h4><p>All-brand RO purifier sales &amp; service, inverters and tubular batteries. 1 year free service. Nandhivaram, Guduvanchery - 603 202.</p></div>
+    <div><h4>Quick links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About &amp; Location</a></li><li><a href="cart.html">Cart &amp; Enquiry</a></li></ul></div>
+    <div><h4>Talk to us</h4><ul><li><a href="https://wa.me/919790868486" target="_blank">WhatsApp: +91 97908 68486</a></li><li><a href="tel:+919790868486">Call: +91 97908 68486</a></li></ul></div>
+  </div>
+  <div class="wrap foot-bottom"><span>© 2026 SVP Systems. All rights reserved.</span><span>Nandhivaram, Guduvanchery</span></div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/919790868486" target="_blank" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 18a8 8 0 01-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1112 20zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9-.3.2-.5.1a6.6 6.6 0 01-1.9-1.2 7 7 0 01-1.3-1.6c-.1-.2 0-.4.1-.5l.4-.4c.1-.1.2-.3.2-.4a.5.5 0 000-.5c-.1-.1-.5-1.3-.7-1.8s-.4-.4-.5-.4h-.5a1 1 0 00-.7.3 3 3 0 00-.9 2.2c0 1.3.9 2.6 1 2.8.1.2 1.8 2.8 4.4 3.8.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1z"/></svg>
+</a>
+
+<script src="assets/app.js"></script>
+<script src="assets/chatbot.js"></script>
+<script>
+let currentCat = "all";
+
+function renderProducts(){
+  const grid = document.getElementById("prod-grid");
+  const products = getProducts().filter(p=>currentCat==="all" || p.cat===currentCat);
+  grid.innerHTML = products.map(p=>`
+    <div class="prod-card">
+      <div class="thumb"><img class="zoomable" src="${p.img}" alt="${p.name}" loading="lazy"></div>
+      <h4>${p.name}${p.brand ? ` <span class="brand-tag">by ${p.brand}</span>` : ""}</h4>
+      <div class="meta">${p.cat} &middot; ${p.desc}</div>
+      ${p.colors && p.colors.length ? `
+        <div class="color-row">
+          <span class="color-row-label">Choose a color:</span>
+          <select id="color-${p.id}" class="color-select">
+            ${p.colors.map(c=>`<option value="${c}">${c}</option>`).join("")}
+          </select>
+        </div>` : ""}
+      <div class="price">Ask price on WhatsApp</div>
+      <div class="add-row">
+        <div class="qty-box">
+          <button onclick="stepQty('${p.id}',-1)">-</button>
+          <input type="text" id="qty-${p.id}" value="1" readonly>
+          <button onclick="stepQty('${p.id}',1)">+</button>
+        </div>
+        <button class="btn-add" onclick="addFromCard('${p.id}')">Add</button>
+      </div>
+    </div>
+  `).join("");
+}
+function stepQty(id,delta){
+  const el = document.getElementById("qty-"+id);
+  let v = parseInt(el.value)+delta;
+  if(v<1) v=1;
+  el.value = v;
+}
+function addFromCard(id){
+  const qty = parseInt(document.getElementById("qty-"+id).value)||1;
+  const colorEl = document.getElementById("color-"+id);
+  const color = colorEl ? colorEl.value : "";
+  addToCart(id, qty, color);
+  renderCartSummary();
+  const enquirySection = document.getElementById("cart-lines");
+  if(enquirySection){
+    enquirySection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+function filterCat(cat, btn){
+  currentCat = cat;
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderProducts();
+}
+function renderCartSummary(){
+  const cart = getCart();
+  const products = getProducts();
+  const box = document.getElementById("cart-lines");
+  const totalBox = document.getElementById("cart-total");
+  if(!cart.length){
+    box.innerHTML = `<p class="empty-note">No items added yet. Add products from the left, or just send a general enquiry below.</p>`;
+    totalBox.style.display = "none";
+    return;
+  }
+  box.innerHTML = cart.map(c=>{
+    const p = products.find(p=>p.id===c.id);
+    if(!p) return "";
+    const colorLabel = c.color ? ` (${c.color})` : "";
+    return `<div class="cart-line"><span>${p.name}${colorLabel} x${c.qty}</span><span><button class="rm" onclick="removeFromCart('${p.id}','${c.color||""}');renderCartSummary();">remove</button></span></div>`;
+  }).join("");
+  totalBox.style.display = "none";
+}
+function cartProductSummary(){
+  const cart = getCart();
+  if(!cart.length) return "(no specific product - general enquiry)";
+  const products = getProducts();
+  return cart.map(c=>{
+    const p = products.find(p=>p.id===c.id);
+    if(!p) return "";
+    const colorLabel = c.color ? ` (${c.color})` : "";
+    return `${p.name}${colorLabel} x${c.qty}`;
+  }).filter(Boolean).join(", ");
+}
+function sendToWhatsApp(){
+  const customer = {
+    name: document.getElementById("cust-name").value.trim(),
+    phone: document.getElementById("cust-phone").value.trim(),
+    area: document.getElementById("cust-area").value.trim(),
+    note: document.getElementById("cust-note").value.trim(),
+  };
+  if(customer.name && customer.phone){
+    saveCustomerToBackend({
+      name: customer.name,
+      phone: customer.phone,
+      address: customer.area,
+      product: cartProductSummary(),
+      note: customer.note,
+    });
+  }
+  openWhatsApp(buildWhatsAppMessage(customer));
+}
+function applyCatFromUrl(){
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get("cat");
+  let target = "all";
+  if(cat === "battery") target = "Battery";
+  else if(cat === "ro") target = "RO Purifier";
+  if(target !== "all"){
+    currentCat = target;
+    document.querySelectorAll(".tab-btn").forEach(b=>{
+      b.classList.toggle("active", b.dataset.cat === target);
+    });
+  }
+}
+
+applyCatFromUrl();
+renderProducts();
+renderCartSummary();
+</script>
+</body>
+</html>
